@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
-import { fork } from 'child_process';
+//import { fork } from 'child_process';
 
 // The built directory structure
 //
@@ -38,7 +38,7 @@ function createWindow() {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(process.env.DIST, 'index.html'))
   }
-  const child = fork(path.join(__dirname, 'tmiClient.ts'));
+  //const child = fork(path.join(__dirname, 'tmiClient.ts'));
 }
 
 app.on('window-all-closed', () => {

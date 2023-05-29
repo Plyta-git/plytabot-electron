@@ -6,7 +6,7 @@ function App() {
   const [messages, setMessages] = useState<string[]>([]);
 
     useEffect(() => {
-        ipcRenderer.on('chat-message', (event, message) => {
+        ipcRenderer.on('chat-message', (_event, message) => {
             setMessages(prevMessages => [...prevMessages, message]);
         });
     }, []);
