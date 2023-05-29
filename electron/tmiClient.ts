@@ -11,7 +11,7 @@ const client = new tmi.Client({
 
 client.connect();
 
-client.on('message', (channel, tags, message, self) => {
+client.on('message', (_channel, tags, message, _self) => {
     console.log(`${tags['display-name']}: ${message}`);
     // Teraz, zamiast wysyłać dane do IPC, wysyłamy je do głównego procesu za pomocą `process.send`.
     if (process.send) {
