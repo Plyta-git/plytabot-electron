@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
+import { fork } from 'child_process';
 
 // The built directory structure
 //
@@ -25,18 +26,19 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
     },
   })
-
   // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', (new Date).toLocaleString())
   })
-
+  
+  
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)
   } else {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(process.env.DIST, 'index.html'))
   }
+  const child = fork(path.join(__dirname, 'tmiClient.ts'));
 }
 
 app.on('window-all-closed', () => {
