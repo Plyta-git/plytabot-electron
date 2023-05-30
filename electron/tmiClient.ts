@@ -1,20 +1,15 @@
-import tmi from 'tmi.js';
+import * as tmi from 'tmi.js';
 
 const client = new tmi.Client({
-    options: { debug: true },
-    connection: {
-        secure: true,
-        reconnect: true
-    },
-    channels: [ 'channel-to-join' ]
+	channels: [ 'jaskol95' ]
 });
+
+
 
 client.connect();
 
-client.on('message', (_channel, tags, message, _self) => {
-    console.log(`${tags['display-name']}: ${message}`);
-    // Teraz, zamiast wysyłać dane do IPC, wysyłamy je do głównego procesu za pomocą `process.send`.
+client.on('message', (channel, tags, message, _self) => {
     if (process.send) {
-        process.send(`${tags['display-name']}: ${message}`);
+        process.send({ channel, tags, message });
     }
 });

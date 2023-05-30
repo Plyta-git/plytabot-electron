@@ -1,3 +1,12 @@
+declare global {
+  interface Window {
+    ipcRenderer: Electron.IpcRenderer;
+  }
+}
+
+window.ipcRenderer = require('electron').ipcRenderer;
+export {};
+
 function domReady(condition: DocumentReadyState[] = ['complete', 'interactive']) {
   return new Promise(resolve => {
     if (condition.includes(document.readyState)) {

@@ -3,19 +3,25 @@ import { ipcRenderer } from 'electron';
 import './App.css'
 
 function App() {
-  const [messages, setMessages] = useState<string[]>([]);
+  const ipcRenderer = window.ipcRenderer;
 
-    useEffect(() => {
-        ipcRenderer.on('chat-message', (_event, message) => {
-            setMessages(prevMessages => [...prevMessages, message]);
-        });
-    }, []);
+useEffect(() => {
+  function handleMessage(event: any, message: any) {
+    console.log(message);
+  }
+
+  ipcRenderer.on('message-from-child', handleMessage);
+
+  // Usuń nasłuch, gdy komponent jest demontowany
+  return () => {
+    ipcRenderer.removeAllListeners('message-from-child');
+  };
+}, []);
+ 
   return (
     <>
       <div>
-            {messages.map((message, index) => (
-                <p key={index}>{message}</p>
-            ))}
+
         </div>
     </>
   )
